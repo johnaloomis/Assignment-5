@@ -79,6 +79,26 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
         successfully finished, navigate back to the 'listing.list' state using $state.go(). If an error 
         occurs, pass it to $scope.error. 
        */
+			  
+	   $scope.error = null;
+	   if (!isValid) {
+        $scope.$broadcast('show-errors-check-validity', 'articleForm');
+
+        return false;
+      }
+	  var id = $stateParams.listingId;
+	   
+	   
+	   Listings.update(id,$scope.listing)
+	   .then(function(response) {
+		   //if the object is successfully saved redirect back to the list page
+		   $state.go('listings.list', { successMessage: 'Listing succesfully updated!' });
+		   }, function(error) {
+			   //otherwise display the error
+			   $scope.error = 'Unable to update listing!\n' + error;
+			   });
+			   
+			 
     };
 
     $scope.remove = function() {
@@ -86,6 +106,17 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
         Implement the remove function. If the removal is successful, navigate back to 'listing.list'. Otherwise, 
         display the error. 
        */
+	  
+	   
+	   
+	   Listings.delete($stateParams.listingId)
+	   .then(function(response) {
+		   //if the object is successfully deleted redirect back to the list page
+		   $state.go('listings.list', { successMessage: 'Listing succesfully deleted!' });
+		   }, function(error) {
+			   //otherwise display the error
+			   $scope.error = 'Unable to delete listing!\n' + error;
+			   });
     };
 
     /* Bind the success message to the scope if it exists as part of the current state */

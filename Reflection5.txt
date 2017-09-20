@@ -1,0 +1,8 @@
+The requests are sent through the the route which picks the correct view file.
+The view file then communitcates with the controller to pick the corect CRUD
+method. The controller uses the model to call methods in the server API to change
+the database. If there is an error it will be sent up to the view and it will be
+caught and displayed to the user. When the server is loading info the user is shown
+a rotating circle that continues until the data is retrieved from the server. If 
+the input is successfully handled the user will be sent back to the list screen 
+without any errors warning them and the new data will be shown.
